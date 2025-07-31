@@ -1,0 +1,2 @@
+docker build -t marina-dev .
+docker run -ti --rm --name marina-dev
