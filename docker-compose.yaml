@@ -3,10 +3,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    user: "${MARINA_UID}:${MARINA_GID}"
     volumes:
       - marina-data:/out:Z #docker volume
-    command: ["sh", "-c", "cp /app/marina /out/marina && chmod 755 /out/marina"]
+    command: ["sh", "-c", "mkdir -p /out && chown -R opam:opam /out && cp /app/marina /out/marina && chmod 755 /out/marina"]
 
   server:
     build: 
