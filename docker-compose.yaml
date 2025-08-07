@@ -1,30 +1,16 @@
 services:
   marina:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    build: .
     volumes:
       - marina-data:/out:Z #docker volume
-    command: ["sh", "-c", "mkdir -p /out && chown -R opam:opam /out && cp /app/marina /out/marina && chmod 755 /out/marina"]
-
-  server:
-    build: 
-      context: .
-      dockerfile: Dockerfile.server
-    volumes:
-      - marina-data:/app/bin 
-    ports:
-      - "5000:5000"
 
   ngrok:
     image: ngrok/ngrok:3
-    command: ["http", "server:5000"]
+    command: ["http", "marina:5000"]
     environment:
       NGROK_AUTHTOKEN: ${NGROK_AUTHTOKEN}
     ports:
       - 4040:4040
-    depends_on:
-      - server
 volumes:
   marina-data:
 #managed volumes
